@@ -1,9 +1,9 @@
-public class MyLinkedList{
+public class MyLinkedList<E>{
   //class node with methods
   private class Node{
-    private Integer data;
+    private E data;
     private Node next,prev;
-    public Node(int val) {
+    public Node(E val) {
       data = val;
     }
     private Node next() {
@@ -12,7 +12,7 @@ public class MyLinkedList{
     private Node prev() {
       return prev;
     }
-    public Integer getData() {
+    public E getData() {
       return data;
     }
     private void setNext(Node other) {
@@ -21,8 +21,8 @@ public class MyLinkedList{
     private void setPrev(Node other) {
       prev = other;
     }
-    public Integer setData(int val) {
-      Integer original = data;
+    public E setData(E val) {
+      E original = data;
       data = val;
       return original;
     }
@@ -39,7 +39,13 @@ public class MyLinkedList{
     return length;
   }
 
-  public boolean add(int value){
+  public void clear(){
+    length = 0;
+    start = null;
+    end = null;
+  }
+
+  public boolean add(E value){
     //node being added
     Node t = new Node(value);
     //special case if list is empty
@@ -87,24 +93,24 @@ public class MyLinkedList{
     return current;
   }
 
-  public Integer get(int index) {
+  public E get(int index) {
     if (index < 0 || index >= size()){
       throw new IndexOutOfBoundsException();
     }
     return getNthNode(index).getData();
   }
 
-  public Integer set(int index, Integer value){
+  public E set(int index, E value){
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
     }
     //returns original value
-    Integer origin = getNthNode(index).getData();
+    E origin = getNthNode(index).getData();
     getNthNode(index).setData(value);
     return origin;
   }
 
-  public boolean contains(Integer value) {
+  public boolean contains(E value) {
     Node current = start;
     //checks by value to end of the list
     while (current != null){
@@ -116,7 +122,7 @@ public class MyLinkedList{
     return false;
   }
 
-  public int indexOf(Integer value) {
+  public int indexOf(E value) {
     Node current = start;
     int index = 0;
     //checks by value to end of the list
@@ -131,7 +137,7 @@ public class MyLinkedList{
     return -1;
   }
 
-  public void add(int index, Integer value) {
+  public void add(int index, E value) {
     if (index < 0 || index > size()) {
       throw new IndexOutOfBoundsException();
     }
@@ -162,14 +168,22 @@ public class MyLinkedList{
     }
   }
 
-  public Integer remove(int index) {
+  public E removeFront() {
+    Node t = start;
+    E value = t.getData();
+    start = t.next();
+    t.next().setPrev(null);
+    return value;
+  }
+
+  public E remove(int index) {
     if (index < 0 || index >= size()) {
       throw new IndexOutOfBoundsException();
     }
     //node being removed
     Node t = getNthNode(index);
     //store data being removed
-    Integer value = t.getData();
+    E value = t.getData();
     //special case if removed is the first in the list and its the only value
     if(index == 0 && size() == 1) {
       start = null;
@@ -191,7 +205,7 @@ public class MyLinkedList{
     return value;
   }
 
-  public boolean remove(Integer value) {
+  public boolean remove(E value) {
     //if the list contains the value then it will remove
     if (contains(value)) {
       //finds the index of the value and uses remove(int index)
@@ -252,7 +266,7 @@ public class MyLinkedList{
   //   System.out.println(a.indexOf(15));
   //   System.out.println("indexof");
   //   System.out.println("remove by value");
-  //   System.out.println(a.remove((Integer) 5));
+  //   System.out.println(a.remove((E) 5));
   //   System.out.println(a);
   //   System.out.println(a.size());
   //   System.out.println("remove by value");
