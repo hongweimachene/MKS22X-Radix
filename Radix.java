@@ -12,13 +12,11 @@ public class Radix{
     }
     //max number of digits in a value in data
     int times = nDigits(data);
-    //starting mod number
-    int mod = 10;
     //running maximum number of digits times to sort
     for (int i = 0; i < times; i++) {
       //runs through array, takes the ith digit and puts into bucket
       for (int j = 0; j < data.length; j++) {
-        int digit = Math.abs(data[j] % mod);
+        int digit = Math.abs(data[j] % Math.pow(10, 1 + i) / Math.pow(10,i));
         //positives 10-19, negatives 0-9
         if (data[j] < 0) {
           buckets[9-Math.abs(digit)].add(data[j]);
@@ -26,8 +24,6 @@ public class Radix{
           buckets[digit+10].add(data[j]);
         }
       }
-      //to get the next place
-      mod*=10;
       //to store the ordered values in bucket
       for (int h = 0; h < buckets.length; h++) {
         order.extend(buckets[h]);
