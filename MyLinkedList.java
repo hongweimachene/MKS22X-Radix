@@ -185,12 +185,7 @@ public class MyLinkedList<E>{
   }
 
   public E removeFront() {
-    Node t = start;
-    E value = t.getData();
-    start = t.next();
-    t.next().setPrev(null);
-    length--;
-    return value;
+    return remove(0);
   }
 
   public E remove(int index) {
