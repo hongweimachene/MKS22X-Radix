@@ -3,6 +3,7 @@ public class Radix{
   @SuppressWarnings("unchecked")
   public static void radixsort(int[]data){
     MyLinkedList<Integer>[] buckets =  new MyLinkedList[20];
+    MyLinkedList order = new MyLinkedList();
     for (int i = 0; i < buckets.length; i++) {
       buckets[i] = new MyLinkedList<Integer>();
     }
@@ -12,10 +13,17 @@ public class Radix{
       for (int j = 0; j < data.length; j++) {
         int digit = Math.abs(data[j] % mod);
         if (data[j] < 0) {
-          buckets[9-digit].addFront(digit);
+          buckets[9-Math.abs(digit)].addFront(data[j]);
         } else {
-          buckets[digit+10].add(digit);
+          buckets[digit+10].add(data[j]);
         }
+      }
+      mod*=10;
+      for (int h = 0; h < buckets.length; h++) {
+        order.extend(buckets[h]);
+      }
+      for (int x = 0; x < data.length; x++){
+        data[x] = (int)order.removeFront();
       }
     }
 

@@ -63,6 +63,22 @@ public class MyLinkedList<E>{
     return true;
   }
 
+  public void addFront(E value) {
+    Node t = new Node(value);
+    //special case if list is empty
+    if (size() == 0) {
+      start = t;
+      end = t;
+    //links the list with new input
+    } else {
+      //changes the added value into end variable
+      t.setNext(start);
+      start.setPrev(t);
+      start= t;
+    }
+    length++;
+  }
+
   public String toString(){
     Node current = start;
     String s = "[";
@@ -173,6 +189,7 @@ public class MyLinkedList<E>{
     E value = t.getData();
     start = t.next();
     t.next().setPrev(null);
+    length--;
     return value;
   }
 
